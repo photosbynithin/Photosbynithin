@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photography Portfolio</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Sans+Pro:wght@300;400;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+        
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 40px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 5px;
+            z-index: 1001;
+        }
+        
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #333;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+        
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+        
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+        
+        .logo {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 40px;
+        }
+        
+        .nav-menu {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            transition: left 0.3s ease;
+            padding: 80px 30px 30px;
+            z-index: 999;
+        }
+        
+        .nav-menu.active {
+            left: 0;
+        }
+        
+        .nav-menu ul {
+            list-style: none;
+        }
+        
+        .nav-menu li {
+            margin: 25px 0;
+        }
+        
+        .nav-menu a {
+            text-decoration: none;
+            color: #333;
+            font-size: 18px;
+            font-weight: 300;
+            transition: color 0.3s;
+        }
+        
+        .nav-menu a:hover {
+            color: #c9a96e;
+        }
+        
+        /* Main Content */
+        main {
+            margin-top: 80px;
+        }
+        
+        /* Hero Slideshow */
+        .hero {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .slideshow-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        
+        .slide.active {
+            opacity: 1;
+        }
+        
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .slide-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.3));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: white;
+            text-align: center;
+        }
+        
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            font-weight: 300;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        
+        /* Thumbnail Bar */
+        .thumbnail-bar {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .thumbnail {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: border-color 0.3s;
+        }
+        
+        .thumbnail.active {
+            border-color: #c9a96e;
+        }
+        
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* Section Styles */
+        .section {
+            padding: 80px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 60px;
+            color: #333;
+        }
+        
+        /* Stories Section */
+        .stories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .story-item {
+            position: relative;
+        }
+        
+        .story-card {
+            position: relative;
+            height: 300px;
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .story-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .story-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: scale 0.3s ease;
+        }
+        
+        .story-card:hover img {
+            scale: 1.05;
+        }
+        
+        .story-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: white;
+            padding: 30px;
+        }
+        
+        .story-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        
+        .story-subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        .story-dropdown {
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.5s ease;
+            background: #f8f8f8;
+            border-radius: 0 0 15px 15px;
+            margin-top: -15px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .story-dropdown.active {
+            max-height: 600px;
+        }
+        
+        .story-photos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            padding: 30px;
+        }
+        
+        .story-photo {
+            aspect-ratio: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .story-photo:hover {
+            transform: scale(1.05);
+        }
+        
+        .story-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* Messages Section */
+        .messages-section {
+            background: #f8f8f8;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .messages-slider {
+            position: relative;
+            overflow: hidden;
+            height: 400px;
+        }
+        
+        .message-container {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        
+        .message {
+            min-width: 100%;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+        
+        .message-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            filter: blur(8px) brightness(0.3);
+            z-index: 1;
+        }
+        
+        .message-content {
+            max-width: 600px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .message-text {
+            font-size: 1.3rem;
+            font-style: italic;
+            color: white;
+            margin-bottom: 20px;
+            line-height: 1.8;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+        }
+        
+        .message-author {
+            font-weight: 600;
+            color: #c9a96e;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+        }
+        
+        .slider-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            color: #333;
+            transition: background 0.3s;
+        }
+        
+        .slider-nav:hover {
+            background: white;
+        }
+        
+        .slider-nav.prev {
+            left: 20px;
+        }
+        
+        .slider-nav.next {
+            right: 20px;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 80px 40px;
+            background: #333;
+            color: white;
+        }
+        
+        .book-us-btn {
+            display: inline-block;
+            background: linear-gradient(45deg, #c9a96e, #e6d7b8);
+            color: white;
+            padding: 20px 50px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 50px;
+            margin-bottom: 40px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .book-us-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(201, 169, 110, 0.3);
+        }
+        
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .contact-link {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+        
+        .contact-link:hover {
+            color: #c9a96e;
+        }
+        
+        /* Lightbox */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+        
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+        }
+        
+        .lightbox img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.5);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.5);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .lightbox-nav.prev {
+            left: 20px;
+        }
+        
+        .lightbox-nav.next {
+            right: 20px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header {
+                padding: 15px 20px;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .section {
+                padding: 60px 20px;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
+            
+            .stories-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .thumbnail-bar {
+                bottom: 20px;
+                padding: 10px;
+                gap: 8px;
+            }
+            
+            .thumbnail {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .contact-links {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        
+        <img src="images/logo_center.png" alt="Logo" class="logo">
+        
+        <nav class="nav-menu" id="navMenu">
+            <ul>
+                <li><a href="#home" onclick="closeMenu()">Home</a></li>
+                <li><a href="#stories" onclick="closeMenu()">Stories</a></li>
+                <li><a href="#messages" onclick="closeMenu()">Messages</a></li>
+                <li><a href="#book-us" onclick="closeMenu()">Book Us</a></li>
+                <li><a href="#contact" onclick="closeMenu()">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="slideshow-container">
+                <div class="slide active">
+                    <img src="images/hero1.jpg" alt="Hero Image 1">
+                    <div class="slide-overlay">
+                        <h1 class="hero-title">Capturing Moments</h1>
+                        <p class="hero-subtitle">Creating memories that last forever</p>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="images/hero2.jpg" alt="Hero Image 2">
+                    <div class="slide-overlay">
+                        <h1 class="hero-title">Love Stories</h1>
+                        <p class="hero-subtitle">Every picture tells a story</p>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="images/hero3.jpg" alt="Hero Image 3">
+                    <div class="slide-overlay">
+                        <h1 class="hero-title">Special Celebrations</h1>
+                        <p class="hero-subtitle">Making every moment unforgettable</p>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="images/hero4.jpg" alt="Hero Image 4">
+                    <div class="slide-overlay">
+                        <h1 class="hero-title">Pure Joy</h1>
+                        <p class="hero-subtitle">Authentic emotions, beautifully captured</p>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="images/hero5.jpg" alt="Hero Image 5">
+                    <div class="slide-overlay">
+                        <h1 class="hero-title">Timeless Elegance</h1>
+                        <p class="hero-subtitle">Classic beauty in every frame</p>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="images/hero6.jpg" alt="Hero Image 6">
+                    <div class="slide-overlay">
+                        <h1 class="hero-title">Natural Beauty</h1>
+                        <p class="hero-subtitle">Candid moments, genuine smiles</p>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="images/hero7.jpg" alt="Hero Image 7">
+                    <div class="slide-overlay">
+                        <h1 class="hero-title">Dream Weddings</h1>
+                        <p class="hero-subtitle">Where fairy tales come to life</p>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="images/hero8.jpg" alt="Hero Image 8">
+                    <div class="slide-overlay">
+                        <h1 class="hero-title">Family Bonds</h1>
+                        <p class="hero-subtitle">Celebrating connections that matter</p>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="images/hero9.jpg" alt="Hero Image 9">
+                    <div class="slide-overlay">
+                        <h1 class="hero-title">Golden Hour</h1>
+                        <p class="hero-subtitle">Magic happens in perfect light</p>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="images/hero10.jpg" alt="Hero Image 10">
+                    <div class="slide-overlay">
+                        <h1 class="hero-title">Forever Memories</h1>
+                        <p class="hero-subtitle">Moments that will last a lifetime</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="thumbnail-bar">
+                <div class="thumbnail active" data-slide="0">
+                    <img src="images/hero1.jpg" alt="Thumb 1">
+                </div>
+                <div class="thumbnail" data-slide="1">
+                    <img src="images/hero2.jpg" alt="Thumb 2">
+                </div>
+                <div class="thumbnail" data-slide="2">
+                    <img src="images/hero3.jpg" alt="Thumb 3">
+                </div>
+                <div class="thumbnail" data-slide="3">
+                    <img src="images/hero4.jpg" alt="Thumb 4">
+                </div>
+                <div class="thumbnail" data-slide="4">
+                    <img src="images/hero5.jpg" alt="Thumb 5">
+                </div>
+                <div class="thumbnail" data-slide="5">
+                    <img src="images/hero6.jpg" alt="Thumb 6">
+                </div>
+                <div class="thumbnail" data-slide="6">
+                    <img src="images/hero7.jpg" alt="Thumb 7">
+                </div>
+                <div class="thumbnail" data-slide="7">
+                    <img src="images/hero8.jpg" alt="Thumb 8">
+                </div>
+                <div class="thumbnail" data-slide="8">
+                    <img src="images/hero9.jpg" alt="Thumb 9">
+                </div>
+                <div class="thumbnail" data-slide="9">
+                    <img src="images/hero10.jpg" alt="Thumb 10">
+                </div>
+            </div>
+        </section>
+
+        <!-- Stories Section -->
+        <section id="stories" class="section">
+            <h2 class="section-title">Our Stories</h2>
+            <div class="stories-grid">
+                <div class="story-item">
+                    <div class="story-card" data-collection="wedding1">
+                        <img src="images/wedding1/cover.jpg" alt="John's Wedding">
+                        <div class="story-overlay">
+                            <h3 class="story-title">John's Wedding</h3>
+                            <p class="story-subtitle">A beautiful celebration of love</p>
+                        </div>
+                    </div>
+                    <div class="story-dropdown" id="dropdown-wedding1">
+                        <div class="story-photos">
+                            <div class="story-photo">
+                                <img src="images/wedding1/photo1.jpg" alt="Wedding Photo 1">
+                            </div>
+                            <div class="story-photo">
+                                <img src="images/wedding1/photo2.jpg" alt="Wedding Photo 2">
+                            </div>
+                            <div class="story-photo">
+                                <img src="images/wedding1/photo3.jpg" alt="Wedding Photo 3">
+                            </div>
+                            <div class="story-photo">
+                                <img src="images/wedding1/photo4.jpg" alt="Wedding Photo 4">
+                            </div>
+                            <div class="story-photo">
+                                <img src="images/wedding1/photo5.jpg" alt="Wedding Photo 5">
+                            </div>
+                            <div class="story-photo">
+                                <img src="images/wedding1/photo6.jpg" alt="Wedding Photo 6">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="story-item">
+                    <div class="story-card" data-collection="gender-reveal">
+                        <img src="images/gender-reveal/cover.jpg" alt="Gender Reveal">
+                        <div class="story-overlay">
+                            <h3 class="story-title">Peter & Mary's Gender Reveal</h3>
+                            <p class="story-subtitle">Exciting moments of anticipation</p>
+                        </div>
+                    </div>
+                    <div class="story-dropdown" id="dropdown-gender-reveal">
+                        <div class="story-photos">
+                            <div class="story-photo">
+                                <img src="images/gender-reveal/photo1.jpg" alt="Gender Reveal Photo 1">
+                            </div>
+                            <div class="story-photo">
+                                <img src="images/gender-reveal/photo2.jpg" alt="Gender Reveal Photo 2">
+                            </div>
+                            <div class="story-photo">
+                                <img src="images/gender-reveal/photo3.jpg" alt="Gender Reveal Photo 3">
+                            </div>
+                            <div class="story-photo">
+                                <img src="images/gender-reveal/photo4.jpg" alt="Gender Reveal Photo 4">
+                            </div>
+                            <div class="story-photo">
+                                <img src="images/gender-reveal/photo5.jpg" alt="Gender Reveal Photo 5">
+                            </div>
+                            <div class="story-photo">
+                                <img src="images/gender-reveal/photo6.jpg" alt="Gender Reveal Photo 6">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="story-item">
+                    <div class="story-card" data-collection="birthday">
+                        <img src="images/birthday/cover.jpg" alt="Birthday Party">
+                        <div class="story-overlay">
+                            <h3 class="story-title">David's Birthday</h3>
+                            <p class="story-subtitle">Joyful celebration with family</p>
+                        </div>
+                    </div>
+                    <div class="story-dropdown" id="dropdown-birthday">
+                        <div class="story-photos">
+                            <div class="story-photo">
+                                <img src="images/birthday/photo1.jpg" alt="Birthday Photo 1">
+                            </div>
+                            <div class="story-photo">
+                                <img src="images/birthday/photo2.jpg" alt="Birthday Photo 2">
+                            </div>
+                            <div class="story-photo">
+                                <img src="images/birthday/photo3.jpg" alt="Birthday Photo 3">
+                            </div>
+                            <div class="story-photo">
+                                <img src="images/birthday/photo4.jpg" alt="Birthday Photo 4">
+                            </div>
+                            <div class="story-photo">
+                                <img src="images/birthday/photo5.jpg" alt="Birthday Photo 5">
+                            </div>
+                            <div class="story-photo">
+                                <img src="images/birthday/photo6.jpg" alt="Birthday Photo 6">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Messages Section -->
+        <section id="messages" class="section messages-section">
+            <h2 class="section-title">Messages from Our Clients</h2>
+            <div class="messages-slider">
+                <div class="message-container" id="messageContainer">
+                    <div class="message">
+                        <div class="message-bg" style="background-image: url('images/testimonial1.jpg');"></div>
+                        <div class="message-content">
+                            <p class="message-text">"Absolutely stunning work! They captured every precious moment of our wedding day perfectly. The photos are beyond our expectations and we couldn't be happier!"</p>
+                            <p class="message-author">— Sarah & Michael</p>
+                        </div>
+                    </div>
+                    <div class="message">
+                        <div class="message-bg" style="background-image: url('images/testimonial2.jpg');"></div>
+                        <div class="message-content">
+                            <p class="message-text">"Professional, creative, and so easy to work with. Our family portraits turned out amazing and the whole experience was wonderful. Highly recommend!"</p>
+                            <p class="message-author">— The Johnson Family</p>
+                        </div>
+                    </div>
+                    <div class="message">
+                        <div class="message-bg" style="background-image: url('images/testimonial3.jpg');"></div>
+                        <div class="message-content">
+                            <p class="message-text">"They have an incredible eye for detail and made our special day even more memorable. The photos tell our story beautifully!"</p>
+                            <p class="message-author">— Emma & David</p>
+                        </div>
+                    </div>
+                </div>
+                <button class="slider-nav prev" onclick="changeMessage(-1)">‹</button>
+                <button class="slider-nav next" onclick="changeMessage(1)">›</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer id="book-us" class="footer">
+        <a href="#contact" class="book-us-btn">Book Us Now</a>
+        <div id="contact" class="contact-links">
+            <a href="mailto:hello@photographer.com" class="contact-link">hello@photographer.com</a>
+            <a href="https://wa.me/1234567890" class="contact-link">WhatsApp</a>
+            <a href="https://instagram.com/photographer" class="contact-link">Instagram</a>
+            <a href="tel:+1234567890" class="contact-link">+1 (234) 567-8900</a>
+        </div>
+    </footer>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <img id="lightboxImg" src="" alt="Gallery Image">
+            <div class="lightbox-close" onclick="closeLightbox()">×</div>
+            <div class="lightbox-nav prev" onclick="changeLightboxImage(-1)">‹</div>
+            <div class="lightbox-nav next" onclick="changeLightboxImage(1)">›</div>
+        </div>
+    </div>
+
+    <script>
+        // Menu Toggle
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+        
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+        
+        function closeMenu() {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+        }
+        
+        // Hero Slideshow
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const thumbnails = document.querySelectorAll('.thumbnail');
+        let slideInterval;
+        
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+            });
+            thumbnails.forEach((thumb, i) => {
+                thumb.classList.toggle('active', i === index);
+            });
+            currentSlide = index;
+        }
+        
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+        
+        function startSlideshow() {
+            slideInterval = setInterval(nextSlide, 3500);
+        }
+        
+        function stopSlideshow() {
+            clearInterval(slideInterval);
+        }
+        
+        // Thumbnail clicks
+        thumbnails.forEach((thumb, index) => {
+            thumb.addEventListener('click', () => {
+                stopSlideshow();
+                showSlide(index);
+                setTimeout(startSlideshow, 5000); // Restart after 5 seconds
+            });
+        });
+        
+        // Start slideshow on load
+        startSlideshow();
+        
+        // Messages Slider
+        let currentMessage = 0;
+        const messageContainer = document.getElementById('messageContainer');
+        const totalMessages = document.querySelectorAll('.message').length;
+        
+        function changeMessage(direction) {
+            currentMessage += direction;
+            if (currentMessage < 0) currentMessage = totalMessages - 1;
+            if (currentMessage >= totalMessages) currentMessage = 0;
+            
+            const translateX = -currentMessage * 100;
+            messageContainer.style.transform = `translateX(${translateX}%)`;
+        }
+        
+        // Auto-scroll messages
+        setInterval(() => {
+            changeMessage(1);
+        }, 4000);
+        
+        // Story Collections (Mock data - replace with actual image paths)
+        const collections = {
+            wedding1: [
+                'images/wedding1/photo1.jpg',
+                'images/wedding1/photo2.jpg',
+                'images/wedding1/photo3.jpg',
+                'images/wedding1/photo4.jpg',
+                'images/wedding1/photo5.jpg'
+            ],
+            'gender-reveal': [
+                'images/gender-reveal/photo1.jpg',
+                'images/gender-reveal/photo2.jpg',
+                'images/gender-reveal/photo3.jpg',
+                'images/gender-reveal/photo4.jpg'
+            ],
+            birthday: [
+                'images/birthday/photo1.jpg',
+                'images/birthday/photo2.jpg',
+                'images/birthday/photo3.jpg',
+                'images/birthday/photo4.jpg',
+                'images/birthday/photo5.jpg',
+                'images/birthday/photo6.jpg'
+            ]
+        };
+        
+        let currentCollection = [];
+        let currentImageIndex = 0;
+        
+        // Story card clicks - Toggle dropdown
+        document.querySelectorAll('.story-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const collectionName = card.dataset.collection;
+                const dropdown = document.getElementById(`dropdown-${collectionName}`);
+                
+                // Close all other dropdowns
+                document.querySelectorAll('.story-dropdown').forEach(dd => {
+                    if (dd !== dropdown) {
+                        dd.classList.remove('active');
+                    }
+                });
+                
+                // Toggle current dropdown
+                dropdown.classList.toggle('active');
+            });
+        });
+        
+        // Individual story photo clicks for lightbox
+        document.querySelectorAll('.story-photo').forEach(photo => {
+            photo.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const img = photo.querySelector('img');
+                const src = img.src;
+                
+                // Find collection and set up lightbox
+                const storyItem = photo.closest('.story-item');
+                const collectionName = storyItem.querySelector('.story-card').dataset.collection;
+                currentCollection = Array.from(storyItem.querySelectorAll('.story-photo img')).map(img => img.src);
+                currentImageIndex = Array.from(storyItem.querySelectorAll('.story-photo img')).findIndex(img => img.src === src);
+                
+                openLightbox();
+            });
+        });
+        
+        // Lightbox functionality
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightboxImg');
+        
+        function openLightbox() {
+            if (currentCollection.length > 0) {
+                lightbox.style.display = 'flex';
+                lightboxImg.src = currentCollection[currentImageIndex];
+                document.body.style.overflow = 'hidden';
+            }
+        }
+        
+        function closeLightbox() {
+            lightbox.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        function changeLightboxImage(direction) {
+            currentImageIndex += direction;
+            if (currentImageIndex < 0) currentImageIndex = currentCollection.length - 1;
+            if (currentImageIndex >= currentCollection.length) currentImageIndex = 0;
+            lightboxImg.src = currentCollection[currentImageIndex];
+        }
+        
+        // Close lightbox on outside click
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (lightbox.style.display === 'flex') {
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') changeLightboxImage(-1);
+                if (e.key === 'ArrowRight') changeLightboxImage(1);
+            }
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
