@@ -6,6 +6,8 @@
     <title>Photography Portfolio</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Sans+Pro:wght@300;400;600&display=swap');
+        /* Added Lobster font for the new header */
+        @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -18,59 +20,57 @@
             overflow-x: hidden; 
         }
 
-        /* Intro Animation Overlay */
-        #intro-overlay {
-            position: fixed;
+        /* Removed Intro Animation Overlay CSS */
+
+        /* New Minimal Header */
+        .site-header {
+            width: 100%;
+            padding: 10px 0;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            position: fixed; /* Keep it at the top */
             top: 0;
             left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: #ffffff;
+            z-index: 1000;
+            /* Added flex properties for alignment */
             display: flex;
-            align-items: center;
             justify-content: center;
-            z-index: 9999;
-            animation: fadeOutIntro 1.5s ease-out 2s forwards;
+            align-items: baseline; /* Aligns text baselines */
+            gap: 10px;
         }
 
-        #intro-overlay h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 3rem;
+        .site-title {
+            font-family: 'Lobster', cursive;
+            font-size: 1.8rem;
             color: #333;
-            opacity: 0;
-            animation: fadeInText 1s ease-in 0.5s forwards;
+            font-weight: 400;
+            /* display: inline-block;  Removed */
+            margin: 0; /* Added */
+            /* vertical-align: middle;  Removed */
+        }
+        
+        .site-tagline {
+            font-family: 'Source Sans Pro', sans-serif; /* Normal font */
+            font-size: 0.9rem; /* Smaller font */
+            color: #555;
+            /* margin-left: 10px; Removed, using gap */
+            /* display: inline-block; Removed */
+            /* vertical-align: middle; Removed */
+            letter-spacing: 0.15em; /* Increased letter-spacing by 15% */
         }
 
-        @keyframes fadeInText {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeOutIntro {
-            from { opacity: 1; }
-            to { opacity: 0; pointer-events: none; }
-        }
-
-        /* Removed header */
 
         main { 
-            /* Remove margin-top that was for the fixed header */
-            margin-top: 0; 
+            /* Add margin-top to account for the new fixed header */
+            margin-top: 50px; /* Adjust based on .site-header's final height */
         }
 
         .hero { 
             position: relative; 
             /* Set height to 100vh to fill the screen */
-            height: 100vh; 
+            height: calc(100vh - 50px); /* Subtract header height */
             overflow: hidden; 
-            /* Hide the main content initially until intro is done */
-            opacity: 0;
-            animation: fadeInMain 0.5s ease-in 3.5s forwards;
-        }
-
-        @keyframes fadeInMain {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            /* Removed opacity and animation, hero is visible immediately */
         }
 
         .slideshow-container { 
@@ -87,7 +87,7 @@
             height: 100%; 
             opacity: 0; 
             transition: opacity 1s ease-in-out; 
-            /* Added white background for 'contain' effect */
+            /* Re-added white background for 'contain' effect */
             background-color: #ffffff; 
             display: flex;
             align-items: center;
@@ -101,40 +101,11 @@
         .slide img { 
             width: 100%; 
             height: 100%; 
-            /* Changed from 'cover' to 'contain' */
+            /* Changed back to 'contain' as requested */
             object-fit: contain; 
         }
 
-        .slide-overlay { 
-            position: absolute; 
-            top: 0; 
-            left: 0; 
-            right: 0; 
-            bottom: 0; 
-            background: linear-gradient(rgba(0,0,0,0.0), rgba(0,0,0,0.2)); 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            flex-direction: column; 
-            color: white; 
-            text-align: center; 
-            /* Make overlay partially transparent so 'contain' bg isn't solid black */
-            background-color: rgba(0,0,0,0.1);
-        }
-
-        .hero-title { 
-            font-family: 'Playfair Display', serif; 
-            font-size: 4rem; 
-            font-weight: 700; 
-            margin-bottom: 20px; 
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5); 
-        }
-        
-        .hero-subtitle { 
-            font-size: 1.5rem; 
-            font-weight: 300; 
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5); 
-        }
+        /* Removed .slide-overlay, .hero-title, and .hero-subtitle CSS */
 
         .thumbnail-bar { 
             position: absolute; 
@@ -142,17 +113,17 @@
             left: 50%; 
             transform: translateX(-50%); 
             display: flex; 
-            gap: 10px; 
+            gap: 8px; /* Reduced */
             background: rgba(255, 255, 255, 0.9); 
-            padding: 15px; 
+            padding: 10px; /* Reduced */
             border-radius: 30px; 
             backdrop-filter: blur(10px); 
             z-index: 50; /* Ensure it's above slide */
         }
 
         .thumbnail { 
-            width: 60px; 
-            height: 60px; 
+            width: 50px; /* Reduced */
+            height: 50px; /* Reduced */
             border-radius: 50%; 
             overflow: hidden; 
             cursor: pointer; 
@@ -287,16 +258,51 @@
             display: block;
         }
 
+        /* New Event Types Section */
+        .event-types-section {
+            background-color: #fdfdfd; /* Use a very light, almost white gray */
+            padding-top: 60px;
+            padding-bottom: 60px;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+        }
+        .event-types-section .section-title {
+            margin-bottom: 25px; /* Less margin than other titles */
+        }
+        .event-types-list {
+            font-family: 'Playfair Display', serif; /* Rich font */
+            font-size: 1.5rem; /* Good size */
+            text-align: center;
+            color: #555;
+            letter-spacing: 0.05em;
+        }
+
         .messages-section { 
-            background: #f8f8f8; 
+            /* Removed background: #f8f8f8; */
             position: relative; 
             overflow: hidden; 
+            /* Ensure padding is applied to see the title */
+            padding-top: 80px;
+            padding-bottom: 80px;
+        }
+
+        /* Make title white for this section */
+        .messages-section .section-title {
+            color: #333; /* Changed to black/dark gray */
+            /* text-shadow: 0 2px 4px rgba(0,0,0,0.5); */ /* Removed shadow */
+            position: relative;
+            z-index: 10;
         }
         
         .messages-slider { 
             position: relative; 
             overflow: hidden; 
             height: 400px; 
+            /* Added a background container for the blurred image */
+            background-color: #222;
+            border-radius: 15px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
         
         .message-container { 
@@ -324,10 +330,9 @@
             height: 100%; 
             background-size: cover; 
             background-position: center; 
-            /* Updated filter: blur and 25% brightness */
-            filter: blur(5px) brightness(0.25); 
+            /* Updated filter: 50% dim (brightness) and blur */
+            filter: blur(8px) brightness(0.5); 
             z-index: 1; 
-            /* Added transform for smoother bg transition (optional) */
             transform: scale(1.1);
         }
         
@@ -335,6 +340,12 @@
             max-width: 600px; 
             position: relative; 
             z-index: 2; 
+            /* Improved visual style for readability */
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(3px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
         
         .message-text { 
@@ -343,13 +354,13 @@
             color: white; 
             margin-bottom: 20px; 
             line-height: 1.8; 
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.7); 
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5); 
         }
         
         .message-author { 
             font-weight: 600; 
             color: #c9a96e; 
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.7); 
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5); 
         }
         
         .slider-nav { 
@@ -380,126 +391,7 @@
             right: 20px; 
         }
 
-        /* AI Inquiry Section */
-        #inquiry {
-            background-color: #ffffff;
-        }
-
-        .inquiry-form-container {
-            max-width: 700px;
-            margin: 0 auto;
-            background: #fdfdfd;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-        }
-
-        .inquiry-subtitle {
-            text-align: center;
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-            color: #555;
-        }
-
-        .inquiry-form {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-        }
-
-        @media (min-width: 600px) {
-            .inquiry-form {
-                grid-template-columns: 1fr 1fr;
-            }
-            .inquiry-form .form-group:nth-child(3),
-            .inquiry-form .gemini-btn {
-                grid-column: 1 / -1;
-            }
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-group label {
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: #333;
-        }
-
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-family: 'Source Sans Pro', sans-serif;
-            background: #fff;
-        }
-
-        .gemini-btn {
-            background: linear-gradient(45deg, #4a90e2, #50e3c2);
-            color: white;
-            padding: 15px 30px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            text-decoration: none;
-            border-radius: 50px;
-            transition: transform 0.3s, box-shadow 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border: none;
-            cursor: pointer;
-            width: 100%;
-        }
-
-        .gemini-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(74, 144, 226, 0.3);
-        }
-
-        .loader {
-            width: 40px;
-            height: 40px;
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #4a90e2;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 30px auto 0;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .gemini-response {
-            margin-top: 30px;
-            background: #f8f8f8;
-            padding: 20px;
-            border-radius: 8px;
-            line-height: 1.7;
-            color: #333;
-        }
-        
-        .gemini-response h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            color: #333;
-            margin-top: 15px;
-            margin-bottom: 10px;
-        }
-
-        .gemini-response ul {
-            list-style-position: inside;
-            padding-left: 10px;
-        }
-
-        .gemini-response li {
-            margin-bottom: 8px;
-        }
+        /* AI Inquiry Section CSS removed */
         
         .footer { 
             text-align: center; 
@@ -533,6 +425,7 @@
             justify-content: center; 
             gap: 30px; 
             margin-top: 30px; 
+            flex-wrap: wrap; /* Added for better mobile wrapping */
         }
         
         .contact-link { 
@@ -617,43 +510,86 @@
         }
         
         @media (max-width: 768px) {
-            #intro-overlay h1 { font-size: 2rem; }
-            .hero-title { font-size: 2.5rem; }
-            .hero-subtitle { font-size: 1.2rem; }
+            .site-header {
+                padding: 8px 0; /* Adjusted padding for stacked elements */
+                /* Revert flex for stacking */
+                display: block;
+                text-align: center;
+            }
+            .site-title { 
+                font-size: 1.5rem; 
+                display: block; /* Stack on mobile */
+                margin-bottom: 2px;
+            }
+            .site-tagline {
+                display: block; /* Stack on mobile */
+                margin-left: 0;
+                font-size: 0.8rem;
+                letter-spacing: 0.1em; /* Slightly less for mobile */
+            }
+            main { 
+                margin-top: 60px; /* Increased for taller mobile header */
+            }
+            .hero { 
+                height: calc(100vh - 60px); /* Increased for taller mobile header */
+            }
+            /* Removed intro overlay h1 */
+            /* Removed hero-title and hero-subtitle */
             .section { padding: 60px 20px; }
             .section-title { font-size: 2.2rem; }
+
+            /* Event types responsive */
+            .event-types-section {
+                padding-top: 50px;
+                padding-bottom: 50px;
+            }
+            .event-types-list {
+                font-size: 1.1rem;
+                line-height: 1.8; /* Allow wrapping */
+            }
+
             .stories-grid { grid-template-columns: 1fr; }
-            .thumbnail-bar { bottom: 20px; padding: 10px; gap: 8px; }
-            .thumbnail { width: 40px; height: 40px; }
+            .thumbnail-bar { 
+                bottom: 20px; 
+                padding: 10px; 
+                gap: 8px; 
+            }
+            .thumbnail { 
+                width: 35px; /* Reduced */
+                height: 35px; /* Reduced */
+            }
             .contact-links { flex-direction: column; gap: 20px; }
             .message-text { font-size: 1.1rem; }
-            .inquiry-form-container { padding: 30px 20px; }
+            .message-content { padding: 20px; }
+            /* Removed inquiry-form-container */
         }
     </style>
 </head>
 <body>
 
-    <!-- Intro Animation Overlay -->
-    <div id="intro-overlay">
-        <h1>Photos by Nitin</h1>
-    </div>
+    <!-- Intro Animation Overlay Removed -->
 
-    <!-- Header removed -->
+    <!-- New Minimal Header -->
+    <header class="site-header">
+        <h1 class="site-title">Photos by Nithin</h1>
+        <span class="site-tagline">Photographer in Austin and San Antonio</span>
+    </header>
 
     <main>
         <section id="home" class="hero">
             <div class="slideshow-container">
                 <!-- Slides (Images will 'contain' with white bg) -->
-                <div class="slide active"><img src="https://raw.githubusercontent.com/photosbynithin/Photosbynithin/main/Images/Slide%20Show/Slide%20(1).jpg" alt="Hero 1"><div class="slide-overlay"><h1 class="hero-title">Capturing Moments</h1><p class="hero-subtitle">Creating memories that last forever</p></div></div>
-                <div class="slide"><img src="https://raw.githubusercontent.com/photosbynithin/Photosbynithin/main/Images/Slide%20Show/Slide%20(2).jpg" alt="Hero 2"><div class="slide-overlay"><h1 class="hero-title">Love Stories</h1><p class="hero-subtitle">Every picture tells a story</p></div></div>
-                <div class="slide"><img src="https://raw.githubusercontent.com/photosbynithin/Photosbynithin/main/Images/Slide%20Show/Slide%20(3).jpg" alt="Hero 3"><div class="slide-overlay"><h1 class="hero-title">Special Celebrations</h1><p class="hero-subtitle">Making every moment unforgettable</p></div></div>
-                <div class="slide"><img src="https://raw.githubusercontent.com/photosbynithin/Photosbynithin/main/Images/Slide%20Show/Slide%20(4).jpg" alt="Hero 4"><div class="slide-overlay"><h1 class="hero-title">Pure Joy</h1><p class="hero-subtitle">Authentic emotions, beautifully captured</p></div></div>
-                <div class="slide"><img src="https://raw.githubusercontent.com/photosbynithin/Photosbynithin/main/Images/Slide%20Show/Slide%20(5).jpg" alt="Hero 5"><div class="slide-overlay"><h1 class="hero-title">Timeless Elegance</h1><p class="hero-subtitle">Classic beauty in every frame</p></div></div>
-                <div class="slide"><img src="https://raw.githubusercontent.com/photosbynithin/Photosbynithin/main/Images/Slide%20Show/Slide%20(6).jpg" alt="Hero 6"><div class="slide-overlay"><h1 class="hero-title">Natural Beauty</h1><p class="hero-subtitle">Candid moments, genuine smiles</p></div></div>
-                <div class="slide"><img src="https://raw.githubusercontent.com/photosbynithin/Photosbynithin/main/Images/Slide%20Show/Slide%20(7).jpg" alt="Hero 7"><div class="slide-overlay"><h1 class="hero-title">Dream Weddings</h1><p class="hero-subtitle">Where fairy tales come to life</p></div></div>
-                <div class="slide"><img src="https://raw.githubusercontent.com/photosbynithin/Photosbynithin/main/Images/Slide%20Show/Slide%20(8).jpg" alt="Hero 8"><div class="slide-overlay"><h1 class="hero-title">Family Bonds</h1><p class="hero-subtitle">Celebrating connections that matter</p></div></div>
-                <div class="slide"><img src="https://raw.githubusercontent.com/photosbynithin/Photosbynithin/main/Images/Slide%20Show/Slide%20(9).jpg" alt="Hero 9"><div class="slide-overlay"><h1 class="hero-title">Golden Hour</h1><p class="hero-subtitle">Magic happens in perfect light</p></div></div>
-                <div class="slide"><img src="https://raw.githubusercontent.com/photosbynithin/Photosbynithin/main/Images/Slide%20Show/Slide%20(10).jpg" alt="Hero 10"><div class="slide-overlay"><h1 class="hero-title">Forever Memories</h1><p class="hero-subtitle">Moments that will last a lifetime</p></div></div>
+                <!-- Removed slide-overlay divs -->
+                <div class="slide active"><img src="https://raw.githubusercontent.com/photosbynithin/Photosbynithin/main/Images/Slide%20Show/Slide%20(1).jpg" alt="Hero 1"></div>
+                <div class="slide"><img src="https://raw.githubusercontent.com/photosbynithin/Photosbynithin/main/Images/Slide%20Show/Slide%20(2).jpg" alt="Hero 2"></div>
+                <div class="slide"><img src="https://raw.githubusercontent.com/photosbynithin/Photosbynithin/main/Images/Slide%20Show/Slide%20(3).jpg" alt="Hero 3"></div>
+                <div class="slide"><img src="https://raw.githubusercontent.com/photosbynithin/Photosbynithin/main/Images/Slide%20Show/Slide%20(4).jpg" alt="Hero 4"></div>
+                <div class="slide"><img src="https://raw.githubusercontent.com/photosbynithin/Photosbynithin/main/Images/Slide%20Show/Slide%20(5).jpg" alt="Hero 5"></div>
+                <div class="slide"><img src="https://raw.githubusercontent.com/photosbynithin/Photosbynithin/main/Images/Slide%20Show/Slide%20(6).jpg" alt="Hero 6"></div>
+                <div class="slide"><img src="https://raw.githubusercontent.com/photosbynithin/Photosbynithin/main/Images/Slide%20Show/Slide%20(7).jpg" alt="Hero 7"></div>
+                <div class="slide"><img src="https://raw.githubusercontent.com/photosbynithin/Photosbynithin/main/Images/Slide%20Show/Slide%20(8).jpg" alt="Hero 8"></div>
+                <div class="slide"><img src="https://raw.githubusercontent.com/photosbynithin/Photosbynithin/main/Images/Slide%20Show/Slide%20(9).jpg" alt="Hero 9"></div>
+                <div class="slide"><img src="https://raw.githubusercontent.com/photosbynithin/Photosbynithin/main/Images/Slide%20Show/Slide%20(10).jpg" alt="Hero 10"></div>
             </div>
             <div class="thumbnail-bar">
                 <div class="thumbnail active" data-slide="0"><img src="https://raw.githubusercontent.com/photosbynithin/Photosbynithin/main/Images/Slide%20Show/Slide%20(1).jpg" alt="T1"></div>
@@ -675,8 +611,8 @@
                 
                 <div class="story-item">
                     <div class="story-card" data-collection="yashna-birthday">
-                        <img src="https://raw.githubusercontent.com/photosbynithin/Photosbynithin/main/Images/Birthday-2/Birthday-B%20(1).jpg" alt="Yashna's Birthday">
-                        <div class="story-overlay"><h3 class="story-title">Yashna's Birthday</h3><p class="story-subtitle">A beautiful celebration of love</p></div>
+                        <img src="https://raw.githubusercontent.com/photosbynithin/Photosbynithin/main/Images/Birthday-2/Birthday-B%20(6).jpg" alt="Yashna's Birthday">
+                        <div class="story-overlay"><h3 class="story-title">Yashna's Birthday</h3><p class="story-subtitle">Another Delightful Year Captured </p></div>
                     </div>
                     <div class="story-dropdown" id="dropdown-yashna-birthday">
                         <!-- Content generated by JS -->
@@ -687,11 +623,11 @@
                 <div class="story-item">
                     <div class="story-card" data-collection="house-warming">
                         <img src="https://raw.githubusercontent.com/photosbynithin/Photosbynithin/main/Images/House%20Warming/HouseWarming%20(1).jpg" alt="House Warming">
-                        <div class="story-overlay"><h3 class="story-title">Sagar & Varsha's House Warming</h3><p class="story-subtitle">Exciting moments of anticipation</p></div>
+                        <div class="story-overlay"><h3 class="story-title">Sagar & Varsha's House Warming</h3><p class="story-subtitle">New Home, New Beginnings </p></div>
                     </div>
                     <div class="story-dropdown" id="dropdown-house-warming">
                         <!-- Content generated by JS -->
-                        <div class="story-photos"></div>
+                        <div classs="story-photos"></div>
                     </div>
                 </div>
                 
@@ -709,7 +645,16 @@
             </div>
         </section>
 
-        <section id="messages" class="section messages-section">
+        <!-- New Event Types Section -->
+        <section id="event-types" class="section event-types-section">
+            <h2 class="section-title">We Shoot Events like</h2>
+            <p class="event-types-list">
+                Birthdays |Grad Photos | House Warmings | Baby Showers |  Fashion
+            </p>
+        </section>
+        <!-- End New Event Types Section -->
+
+        <section id="messages" class="messages-section">
             <h2 class="section-title">Messages from Our Clients</h2>
             <div class="messages-slider">
                 <div class="message-container" id="messageContainer">
@@ -717,22 +662,22 @@
                     <div class="message">
                         <div class="message-bg"></div>
                         <div class="message-content">
-                            <p class="message-text">"Absolutely stunning work! They captured every precious moment of our wedding day perfectly. The photos are beyond our expectations and we couldn't be happier!"</p>
-                            <p class="message-author">— Sarah & Michael</p>
+                            <p class="message-text">"You have Captured amazing photos that really tell a story and bring back our wonderful memories !"</p>
+                            <p class="message-author">— Sagar & Varsha</p>
                         </div>
                     </div>
                     <div class="message">
                         <div class="message-bg"></div>
                         <div class="message-content">
-                            <p class="message-text">"Professional, creative, and so easy to work with. Our family portraits turned out amazing and the whole experience was wonderful. Highly recommend!"</p>
-                            <p class="message-author">— The Johnson Family</p>
+                            <p class="message-text">"Professional, creative, and so easy to work with. Our family photos turned out amazing and the whole experience was wonderful. Highly recommend!"</p>
+                            <p class="message-author">— The Yashna's Family</p>
                         </div>
                     </div>
                     <div class="message">
                         <div class="message-bg"></div>
                         <div class="message-content">
-                            <p class="message-text">"They have an incredible eye for detail and made our special day even more memorable. The photos tell our story beautifully!"</p>
-                            <p class="message-author">— Emma & David</p>
+                            <p class="message-text">" Nithin captured my graduation day with professionalism and creativity delivering photos that truly celebrate my achievement!"</p>
+                            <p class="message-author">— Sneha</p>
                         </div>
                     </div>
                 </div>
@@ -741,50 +686,18 @@
             </div>
         </section>
 
-        <!-- New Gemini AI Inquiry Section -->
-        <section id="inquiry" class="section">
-            <h2 class="section-title">Plan Your Perfect Shoot</h2>
-            <div class="inquiry-form-container">
-                <p class="inquiry-subtitle">Tell us about your event, and our AI assistant can help you brainstorm ideas!</p>
-                <form id="inquiry-form" class="inquiry-form">
-                    <div class="form-group">
-                        <label for="event-type">Event Type</label>
-                        <select id="event-type" name="event-type">
-                            <option value="Wedding">Wedding</option>
-                            <option value="Birthday Party">Birthday Party</option>
-                            <option value="Family Portrait">Family Portrait</option>
-                            <option value="Corporate Event">Corporate Event</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="event-guests">Est. Guests</label>
-                        <select id="event-guests" name="event-guests">
-                            <option value="1-25">1-25</option>
-                            <option value="25-100">25-100</option>
-                            <option value="100+">100+</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="event-location">Location (City, State)</label>
-                        <input type="text" id="event-location" name="event-location" placeholder="e.g., San Francisco, CA">
-                    </div>
-                    <button type="submit" class="gemini-btn">✨ Get AI Suggestions</button>
-                </form>
-                <div id="gemini-loader" class="loader" style="display: none;"></div>
-                <div id="gemini-response" class="gemini-response"></div>
-            </div>
-        </section>
+        <!-- Gemini AI Inquiry Section Removed -->
+
     </main>
 
     <footer id="contact-footer" class="footer">
-        <!-- Button now links to #inquiry section -->
-        <a href="#inquiry" class="book-us-btn">Book Us Now</a>
+        <!-- Button now links to WhatsApp -->
+        <a href="https://wa.me/+19452144051" class="book-us-btn" target="_blank">Book Us Now</a>
         <div id="contact" class="contact-links">
-            <a href="mailto:hello@photographer.com" class="contact-link">hello@photographer.com</a>
-            <a href="https://wa.me/1234567890" class="contact-link" target="_blank">WhatsApp</a>
-            <a href="https://instagram.com/photographer" class="contact-link" target="_blank">Instagram</a>
-            <a href="tel:+1234567890" class="contact-link">+1 (234) 567-8900</a>
+            <a href="mailto:photosbynithin@gmail.com" class="contact-link">photosbynithin@gmail.com</a>
+            <a href="https://wa.me/9452144051" class="contact-link" target="_blank">WhatsApp</a>
+            <a href="https://www.instagram.com/photosbynithin/" class="contact-link" target="_blank">Instagram</a>
+            <a href="tel:+19452144051" class="contact-link">+1 (945) 214-4051</a>
         </div>
     </footer>
 
@@ -802,39 +715,38 @@
         document.addEventListener('DOMContentLoaded', () => {
 
             // --- Removed Header/Nav JS ---
-            // All JS for hamburger, navMenu, and closeMenu() has been removed.
-
-            // --- Intro Animation & Slideshow Start ---
-            const introOverlay = document.getElementById('intro-overlay');
-            setTimeout(() => {
-                // Hide overlay completely after animation
-                if (introOverlay) {
-                    introOverlay.style.display = 'none';
-                }
-                // Start the slideshow *after* the intro is finished
-                startSlideshow();
-            }, 3500); // Matches 2s text + 1.5s fade-out animation
 
             // --- Hero Slideshow ---
             let currentSlide = 0;
             const slides = document.querySelectorAll('.slide');
             const thumbnails = document.querySelectorAll('.thumbnail');
-            let slideInterval;
+            let slideInterval; // Declare interval variable
 
             function showSlide(index) {
-                slides.forEach((slide, i) => { slide.classList.toggle('active', i === index); });
-                thumbnails.forEach((thumb, i) => { thumb.classList.toggle('active', i === index); });
+                // Ensure slides and thumbnails exist
+                if (slides.length === 0 || thumbnails.length === 0) return;
+                
+                slides.forEach((slide, i) => { 
+                    slide.classList.toggle('active', i === index); 
+                });
+                thumbnails.forEach((thumb, i) => { 
+                    thumb.classList.toggle('active', i === index); 
+                });
                 currentSlide = index;
             }
 
             function nextSlide() {
-                currentSlide = (currentSlide + 1) % slides.length;
-                showSlide(currentSlide);
+                // Ensure slides exist
+                if (slides.length === 0) return;
+                
+                let newSlide = (currentSlide + 1) % slides.length;
+                showSlide(newSlide);
             }
 
             function startSlideshow() { 
-                // Don't start until called after intro animation
-                clearInterval(slideInterval); // Clear any existing
+                // Clear any existing interval to prevent duplicates
+                clearInterval(slideInterval); 
+                // Start a new interval
                 slideInterval = setInterval(nextSlide, 3500); 
             }
 
@@ -844,41 +756,49 @@
 
             thumbnails.forEach((thumb, index) => {
                 thumb.addEventListener('click', () => {
-                    stopSlideshow();
-                    showSlide(index);
+                    stopSlideshow(); // Stop autoplay
+                    showSlide(index); // Show clicked slide
                     // Restart slideshow after a pause
                     setTimeout(startSlideshow, 5000); 
                 });
             });
             
-            // Note: startSlideshow() is no longer called here, but after the intro animation.
+            // Start the slideshow right away
+            startSlideshow();
 
             // --- Messages Section ---
             let currentMessage = 0;
             const messageContainer = document.getElementById('messageContainer');
-            const totalMessages = document.querySelectorAll('.message').length;
+            // Check if messageContainer exists before proceeding
+            if (messageContainer) {
+                const totalMessages = document.querySelectorAll('.message').length;
 
-            function changeMessage(direction) {
-                currentMessage += direction;
-                if (currentMessage < 0) currentMessage = totalMessages - 1;
-                if (currentMessage >= totalMessages) currentMessage = 0;
-                const translateX = -currentMessage * 100;
-                if (messageContainer) {
+                // Make changeMessage function available globally for onclick
+                window.changeMessage = function(direction) {
+                    currentMessage += direction;
+                    if (currentMessage < 0) currentMessage = totalMessages - 1;
+                    if (currentMessage >= totalMessages) currentMessage = 0;
+                    const translateX = -currentMessage * 100;
                     messageContainer.style.transform = `translateX(${translateX}%)`;
                 }
-            }
-            // Autoplay messages
-            setInterval(() => { changeMessage(1); }, 4000);
+                // Autoplay messages
+                setInterval(() => { 
+                    // Check if function exists before calling
+                    if (window.changeMessage) {
+                        window.changeMessage(1); 
+                    }
+                }, 4000);
 
-            // Set message backgrounds from slideshow images
-            const slideshowImages = Array.from(document.querySelectorAll('.slide img')).map(img => img.src);
-            const messageBgs = document.querySelectorAll('.message-bg');
-            messageBgs.forEach((bg, index) => {
-                // Use slideshow images, wrap around if more messages than slides
-                if (slideshowImages.length > 0) {
-                    bg.style.backgroundImage = `url(${slideshowImages[index % slideshowImages.length]})`;
-                }
-            });
+                // Set message backgrounds from slideshow images
+                const slideshowImages = Array.from(document.querySelectorAll('.slide img')).map(img => img.src);
+                const messageBgs = document.querySelectorAll('.message-bg');
+                messageBgs.forEach((bg, index) => {
+                    // Use slideshow images, wrap around if more messages than slides
+                    if (slideshowImages.length > 0) {
+                        bg.style.backgroundImage = `url(${slideshowImages[index % slideshowImages.length]})`;
+                    }
+                });
+            }
 
             // --- Stories Section & Lightbox ---
             const pathPrefix = 'https://raw.githubusercontent.com/photosbynithin/Photosbynithin/main/Images/';
@@ -947,14 +867,20 @@
                         e.stopPropagation(); // Prevent card click
                         
                         const img = photo.querySelector('img');
+                        if (!img) return; // Safety check
                         const src = img.src;
                         
                         // Find the collection this photo belongs to
                         const storyItem = photo.closest('.story-item');
-                        const collectionName = storyItem.querySelector('.story-card').dataset.collection;
+                        if (!storyItem) return;
+                        const card = storyItem.querySelector('.story-card');
+                        if (!card) return;
+                        const collectionName = card.dataset.collection;
                         
                         // Build the current collection array from storyData
                         const data = storyData[collectionName];
+                        if (!data) return;
+                        
                         currentCollection = [];
                         for (let i = 1; i <= data.count; i++) {
                             currentCollection.push(`${pathPrefix}${data.folder}/${data.prefix}(${i}).jpg`);
@@ -985,6 +911,7 @@
             }
 
             window.changeLightboxImage = function(direction) {
+                if (currentCollection.length === 0) return;
                 currentImageIndex += direction;
                 if (currentImageIndex < 0) {
                     currentImageIndex = currentCollection.length - 1;
@@ -1013,103 +940,15 @@
             });
 
             // --- Smooth Scroll for Footer Link ---
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) { 
-                        target.scrollIntoView({ behavior: 'smooth', block: 'start' }); 
-                    }
-                });
-            });
+            // Removed, as the only internal link was to the (now removed) inquiry section.
 
             // --- Initial Population ---
             populateStoryDropdowns();
 
             // --- Gemini AI Inquiry Form ---
-            const inquiryForm = document.getElementById('inquiry-form');
-            const geminiLoader = document.getElementById('gemini-loader');
-            const geminiResponse = document.getElementById('gemini-response');
-
-            if (inquiryForm) {
-                inquiryForm.addEventListener('submit', async (e) => {
-                    e.preventDefault();
-                    if (geminiLoader) geminiLoader.style.display = 'block';
-                    if (geminiResponse) geminiResponse.innerHTML = '';
-
-                    const eventType = document.getElementById('event-type').value;
-                    const eventGuests = document.getElementById('event-guests').value;
-                    const eventLocation = document.getElementById('event-location').value || 'a special location';
-
-                    const userQuery = `I'm planning a ${eventType} in ${eventLocation} for ${eventGuests} guests. Can you give me 3 creative photo shoot ideas and a short sample shot list (5-7 items) for this event?`;
-                    
-                    const systemPrompt = "You are a friendly and creative photography assistant for 'Photos by Nitin'. Your goal is to help potential clients brainstorm ideas for their event. Provide suggestions in a concise, friendly, and inspiring tone. Format your response using simple HTML: use `<h3>` for titles (like 'Creative Ideas' or 'Sample Shot List') and `<ul>` and `<li>` for lists. Do not use markdown. Start with a friendly greeting.";
-
-                    try {
-                        const generatedText = await callGeminiAPI(userQuery, systemPrompt);
-                        if (geminiResponse) geminiResponse.innerHTML = generatedText;
-                    } catch (error) {
-                        console.error('Gemini API call failed:', error);
-                        if (geminiResponse) geminiResponse.innerHTML = '<p>Sorry, I couldn\'t generate suggestions at this time. Please try again later.</p>';
-                    } finally {
-                        if (geminiLoader) geminiLoader.style.display = 'none';
-                    }
-                });
-            }
-
-            /**
-             * Calls the Gemini API with exponential backoff.
-             */
-            async function callGeminiAPI(userQuery, systemPrompt, retries = 3, delay = 1000) {
-                const apiKey = ""; // API key is handled by the environment
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-
-                const payload = {
-                    contents: [{ parts: [{ text: userQuery }] }],
-                    systemInstruction: {
-                        parts: [{ text: systemPrompt }]
-                    },
-                };
-
-                try {
-                    const response = await fetch(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-
-                    if (!response.ok) {
-                        // Handle throttling with retry
-                        if (response.status === 429 && retries > 0) {
-                            await new Promise(res => setTimeout(res, delay));
-                            return callGeminiAPI(userQuery, systemPrompt, retries - 1, delay * 2);
-                        }
-                        throw new Error(`API response error: ${response.status} ${response.statusText}`);
-                    }
-
-                    const result = await response.json();
-                    const candidate = result.candidates?.[0];
-
-                    if (candidate && candidate.content?.parts?.[0]?.text) {
-                        return candidate.content.parts[0].text;
-                    } else {
-                        // Handle empty or invalid response
-                        throw new Error('Invalid response structure from API.');
-                    }
-                } catch (error) {
-                    // Retry on network errors
-                    if (retries > 0) {
-                        await new Promise(res => setTimeout(res, delay));
-                        return callGeminiAPI(userQuery, systemPrompt, retries - 1, delay * 2);
-                    } else {
-                        console.error("Gemini API call failed after retries:", error);
-                        throw error; // Re-throw the error after all retries fail
-                    }
-                }
-            }
+            // All JavaScript for the AI form has been removed.
 
         }); // End DOMContentLoaded
     </script>
 </body>
 </html>
-
